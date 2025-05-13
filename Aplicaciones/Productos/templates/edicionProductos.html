@@ -1,0 +1,51 @@
+{% extends "./base.html" %}
+
+{% block title %} Edición de Productos {% endblock %}
+
+{% block body %}
+
+<div class="row">
+    <div class="col-md-4 offset-md-4">
+        <h2>Edición de Productos</h2> 
+        <div class="card">
+        <div class="card-body">
+            <form action="/editarProductos/" method="POST">
+
+                <div class="form-group">{% csrf_token %}
+                <input type="text" id="txtCodigo" name="txtCodigo" value="{{ productos.codigo }}" class="form-control" placeholder="Código" minlength="6" maxlength="6" readonly required>      
+                </div>
+                <div class="form-group">
+                <input type="text" id="txtDescripcion" name="txtDescripcion" value="{{ productos.descripcion }}" class="form-control" placeholder="Descripción" minlength="10" maxlength="100" required>
+                </div>
+                <div class="form-group">
+                <input type="text" id="txtMarca" name="txtMarca" value="{{ productos.marca }}" class="form-control" placeholder="Marca" maxlength="50" required>
+                </div>
+                <div class="form-group">
+                <input type="text" id="txtLote" name="txtLote" value="{{ productos.lote }}" class="form-control" placeholder="Lote" maxlength="20" required>
+                </div>
+                <div class="form-group">
+                <input type="date" id="txtFechaVencimiento" name="txtFechaVencimiento" value="{{ productos.fecha_vencimiento|date:'Y-m-d' }}" class="form-control" required>
+                </div>
+                <div class="form-group">
+                <input type="number" id="txtPrecioLista" name="txtPrecioLista" value="{{ productos.precio_lista }}" class="form-control" placeholder="Precio Lista" step="0.01" min="0" required>
+                </div>
+                <div class="form-group">
+                <input type="number" id="txtStock" name="txtStock" value="{{ productos.stock_disponible }}" class="form-control" placeholder="Stock Disponible" min="0" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="txtUnidadMedida" name="txtUnidadMedida" value="{{ productos.unidad_medida }}" class="form-control" placeholder="Unidad de Medida (ej: comprimidos, ml, frascos)" maxlength="20" required>
+                </div>                
+                <div class="form-group form-check">
+                    <input type="checkbox" class="form-check-input" id="chkReceta" name="chkReceta" {% if producto.requiere_receta %}checked{% endif %}>
+                    <label class="form-check-label" for="chkReceta">Requiere receta médica</label>
+                </div>                
+                <div class="form-group">
+                    <textarea id="txtObservaciones" name="txtObservaciones" class="form-control" rows="3" placeholder="Observaciones (opcional)">{{ productos.observaciones }}</textarea>
+                </div>                
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success btn-block text-white">Guardar</button>
+                </div>
+                </form>
+    </div>
+</div>
+{% endblock %}

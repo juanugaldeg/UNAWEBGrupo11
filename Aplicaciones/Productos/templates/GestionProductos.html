@@ -1,0 +1,78 @@
+{% extends "./base.html" %}
+
+{% block title %} Gestion de Productos {% endblock %}
+
+{% block body %}
+
+<div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+       <h2>Agregar Producto Nuevo</h2> 
+        <div class="card">
+        <div class="card-body">
+                <form action="/registrarProductos/" method="POST">
+                    <div class="form-group">{% csrf_token %}
+                       <input type="text" id="txtCodigo" name="txtCodigo" class="form.control" placeholder="codigo" minlength="6" maxlength="6" required>     
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="txtDescripcion" name="txtDescripcion" class="form.control" placeholder="descripcion" minlength="10" maxlength="100" required>     
+                     </div>
+                     <div class="form-group">
+                        <input type="text" id="txtMarca" name="txtMarca" class="form.control" placeholder="Marca" minlength="6" maxlength="50" required>     
+                     </div>
+                     <div class="form-group">
+                        <input type="text" id="txtLote" name="txtLote" class="form.control" placeholder="Lote" minlength="6" maxlength="20" required>     
+                     </div>
+                     <div class="form-group">
+                        <input type="date" id="txtFechaVencimiento" name="txtFechaVencimiento" class="form-control" required>     
+                    </div>                    
+                    <div class="form-group">
+                        <input type="number" id="txtPrecioLista" name="txtPrecioLista" class="form-control" placeholder="Precio Lista" step="0.01" min="0" required>     
+                    </div>
+                    <div class="form-group">
+                        <input type="number" id="txtStock" name="txtStock" class="form-control" placeholder="Stock Disponible" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="txtUnidadMedida" name="txtUnidadMedida" class="form-control" placeholder="Unidad de Medida (ej: comprimidos, ml, frascos)" maxlength="20" required>
+                    </div>
+                    <div class="form-group form-check">
+                        <input type="checkbox" class="form-check-input" id="chkReceta" name="chkReceta">
+                        <label class="form-check-label" for="chkReceta">Requiere receta médica</label>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="txtObservaciones" name="txtObservaciones" class="form-control" rows="3" placeholder="Observaciones (opcional)"></textarea>
+                    </div>
+                    <div class="form-group">
+                         <button type="submit" class="btn btn-success btn-block" text-white >Guardar</button>   
+                    </div>
+                </form>
+        </div>
+        </div> 
+    </div>
+    <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+        <h1>Listado de Productos</h1>
+    <div class="table-responsive py-2">
+        <table class="table table-striped">
+           <thead>
+            <tr>
+            <th>Codigo</th>
+            <th>Descripcion</th>
+            <th colspan="">Opciones</th>
+            </tr>
+           </thead>
+           <tbody>
+                    {% for p in productos %}
+                        <tr>
+                             <td>{{p.codigo}}</td>
+                             <td>{{p.descripcion}}</td>
+                             <td><a href="edicionProductos/{{p.codigo}}" class="btn btn-info">Editar</a></td>
+                             <td><a href="eliminarProductos/{{p.codigo}}" class="btn btn-danger">Eliminar</a></td>
+                        </tr>
+                    {% endfor %}
+           </tbody>           
+        </table>
+    </div>       
+    </div>
+</div>
+
+{% endblock %}
+
